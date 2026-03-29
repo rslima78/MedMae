@@ -171,6 +171,7 @@ function MedicationApp() {
 
       if (error) throw error;
       
+      await fetchData();
       setNewName('');
       setNewPrescription('1');
       setNewTotal('');
@@ -191,6 +192,7 @@ function MedicationApp() {
         user_id: userId
       });
       if (error) throw error;
+      await fetchData();
       setPharmacyName('');
       setIsAddingPharmacy(false);
     } catch (error) {
@@ -214,6 +216,7 @@ function MedicationApp() {
       
       if (error) throw error;
       
+      await fetchData();
       setPriceMedId('');
       setPricePharmacyId('');
       setPriceValue('');
@@ -240,6 +243,7 @@ function MedicationApp() {
 
       if (error) throw error;
 
+      await fetchData();
       setIsRefilling(null);
       setRefillAmount('');
     } catch (error) {
@@ -251,6 +255,7 @@ function MedicationApp() {
     if (!window.confirm('Tem certeza que deseja excluir este medicamento?')) return;
     try {
       await supabase.from('medications').delete().eq('id', id);
+      await fetchData();
     } catch (error) {
       console.error('Error deleting medication:', error);
     }
@@ -260,6 +265,7 @@ function MedicationApp() {
     if (!window.confirm('Excluir este registro de preço?')) return;
     try {
       await supabase.from('price_records').delete().eq('id', id);
+      await fetchData();
     } catch (error) {
       console.error('Error deleting price record:', error);
     }
@@ -269,6 +275,7 @@ function MedicationApp() {
     if (!window.confirm('Excluir esta farmácia?')) return;
     try {
       await supabase.from('pharmacies').delete().eq('id', id);
+      await fetchData();
     } catch (error) {
       console.error('Error deleting pharmacy:', error);
     }
