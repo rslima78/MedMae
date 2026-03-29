@@ -1,0 +1,5 @@
+{
+  "name": "Estoque de Remédios da Mamãe",
+  "description": "Aplicativo para acompanhar o estoque de medicamentos, calcular a duração baseada na prescrição e alertar quando o estoque estiver baixo.",
+  "requestFramePermissions": []
+}
