@@ -87,6 +87,9 @@ function MedicationApp() {
   // Refill state
   const [refillAmount, setRefillAmount] = useState('');
 
+  // Sync state
+  const [importId, setImportId] = useState('');
+
   const fetchData = async () => {
     try {
       const [meds, phars, prices] = await Promise.all([
@@ -144,6 +147,14 @@ function MedicationApp() {
     navigator.clipboard.writeText(userId);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSyncId = () => {
+    if (!importId.trim()) return;
+    if (!window.confirm('Ao sincronizar, o aplicativo será recarregado e os dados atuais serão substituídos pelos dados do novo ID. Deseja continuar?')) return;
+    
+    localStorage.setItem('medmae_device_id', importId.trim());
+    window.location.reload();
   };
 
   const handleAddMedication = async (e: React.FormEvent) => {
@@ -798,6 +809,26 @@ function MedicationApp() {
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                 </button>
+              </div>
+
+              <div className="border-t border-slate-100 pt-6 mb-6">
+                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Sincronizar Dispositivo</label>
+                <div className="flex gap-2">
+                  <input 
+                    type="text" 
+                    placeholder="Cole o ID aqui..." 
+                    className="flex-grow bg-slate-50 border-2 border-slate-100 rounded-xl px-3 py-2 text-xs focus:border-blue-500 transition-all outline-none"
+                    value={importId}
+                    onChange={(e) => setImportId(e.target.value)}
+                  />
+                  <button 
+                    onClick={handleSyncId}
+                    className="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-black transition-colors"
+                  >
+                    Sincronizar
+                  </button>
+                </div>
+                <p className="text-[10px] text-slate-400 mt-2 italic">* Use isso para acessar os mesmos dados no computador e celular.</p>
               </div>
 
               <button 
